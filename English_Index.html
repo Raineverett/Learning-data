@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>English Word Bank & Practice</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h2 { margin-top: 30px; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+    th, td { border: 1px solid #aaa; padding: 6px; text-align: left; }
+    th { background-color: #f0f0f0; }
+    .word { color: blue; cursor: pointer; text-decoration: underline; }
+    .sentence { color: darkgreen; cursor: pointer; }
+    #question { font-size: 20px; margin-bottom: 10px; cursor: pointer; color: darkblue; }
+    input { padding: 5px; font-size: 16px; }
+    button { padding: 6px 12px; margin: 5px; }
+    #result { margin-top: 10px; font-weight: bold; }
+    #controls, #controlsWordList { margin-top: 15px; }
+    .hidden { display: none; }
+    .unitSelect { margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>English Learning Portal</h1>
+  <button onclick="showSection('wordList')">📘 單字清單</button>
+  <button onclick="showSection('practice')">✏️ 填空練習</button>
+
+  <!-- 單字清單區 -->
+  <div id="wordList">
+    <h2>單字清單</h2>
+    <div class="unitSelect">
+      <label><input type="checkbox" value="1"> Unit 1</label>
+      <label><input type="checkbox" value="2"> Unit 2</label>
+      <label><input type="checkbox" value="3" checked> Unit 3</label>
+      <label><input type="checkbox" value="4" checked> Unit 4</label>
+      <label><input type="checkbox" value="5"> Unit 5</label>
+      <label><input type="checkbox" value="6"> Unit 6</label>
+      <button onclick="selectAll('wordList')">全選</button>
+      <button onclick="deselectAll('wordList')">全不選</button>
+      <button onclick="renderWordTable()">更新清單</button>
+    </div>
+    <table id="wordTable">
+      <tr>
+        <th>Unit</th><th>編號</th><th>單字</th><th>詞性</th><th>中文意思</th>
+        <th>課本例句</th><th>額外例句1</th><th>額外例句2</th><th>額外例句3</th>
+      </tr>
+    </table>
+    <div id="controlsWordList">
+      <label for="speedWord">朗讀速度：</label>
+      <select id="speedWord" onchange="updateSpeedWord()">
+        <option value="0.6">慢</option>
+        <option value="0.8" selected>中</option>
+        <option value="1.2">快</option>
+      </select>
+      <label for="voiceSelectWord">語音：</label>
+      <select id="voiceSelectWord"></select>
+    </div>
+  </div>
+
+  <!-- 填空練習區 -->
+  <div id="practice" class="hidden">
+    <h2>隨機填空練習</h2>
+    <div class="unitSelect">
+      <label><input type="checkbox" value="1"> Unit 1</label>
+      <label><input type="checkbox" value="2"> Unit 2</label>
+      <label><input type="checkbox" value="3" checked> Unit 3</label>
+      <label><input type="checkbox" value="4" checked> Unit 4</label>
+      <label><input type="checkbox" value="5"> Unit 5</label>
+      <label><input type="checkbox" value="6"> Unit 6</label>
+      <button onclick="selectAll('practice')">全選</button>
+      <button onclick="deselectAll('practice')">全不選</button>
+    </div>
+    <div id="question" onclick="readQuestion()"></div>
+    <input type="text" id="answer" placeholder="輸入答案">
+    <button onclick="checkAnswer()">檢查</button>
+    <button onclick="nextQuestion()">下一題</button>
+    <div id="result"></div>
+    <div id="controls">
+      <label for="speed">朗讀速度：</label>
+      <select id="speed" onchange="updateSpeed()">
+        <option value="0.6">慢</option>
+        <option value="0.8" selected>中</option>
+        <option value="1.2">快</option>
+      </select>
+      <label for="voiceSelect">語音：</label>
+      <select id="voiceSelect"></select>
+    </div>
+  </div>
+
+  <script>
+    // === 題庫資料 (示範：Unit 3 部分，完整需補齊 Unit1-6) ===
+    const questions = [
+  {
+    unit: 3, id: 1, word: "guy", pos: "n.", meaning: "人；傢伙",
+    examples: [
+      "Guys, don't run in the classroom.",
+      "That guy is my best friend.",
+      "Some guys are playing basketball after school.",
+      "Do you know the guy standing near the door?"
+    ]
+  },
+  {
+    unit: 3, id: 2, word: "with", pos: "prep.", meaning: "用；和",
+    examples: [
+      "She's in the car with Dad.",
+      "I like to play with my friends.",
+      "He goes to school with his sister.",
+      "I eat lunch with my classmates."
+    ]
+  },
+  {
+    unit: 3, id: 3, word: "can", pos: "aux.", meaning: "可以；會",
+    examples: [
+      "We can't eat in the lab.",
+      "Can you help me with my homework?",
+      "I can swim very well.",
+      "We can play basketball after class."
+    ]
+  },
+  {
+    unit: 3, id: 4, word: "many", pos: "adj./pron.", meaning: "許多",
+    examples: [
+      "Many English teachers are women.",
+      "Many students like sports.",
+      "I have many books at home.",
+      "How many apples are on the table?"
+    ]
+  },
+  {
+    unit: 3, id: 5, word: "place", pos: "n.", meaning: "地方",
+    examples: [
+      "What is this place? It's beautiful.",
+      "This is a good place to study.",
+      "The park is my favorite place.",
+      "Let's find a safe place to play."
+    ]
+  },
+  {
+    unit: 3, id: 6, word: "use", pos: "v./n.", meaning: "使用",
+    examples: [
+      "Can I use the bathroom?",
+      "I use my phone every day.",
+      "She can use chopsticks very well.",
+      "Please use a pen to write your name."
+    ]
+  },
+  {
+    unit: 3, id: 7, word: "sure", pos: "adv./adj.", meaning: "當然；確定的",
+    examples: [
+      "I'm not sure.",
+      "Are you sure this is right?",
+      "I'm sure he is my friend.",
+      "Sure, let's go together."
+    ]
+  },
+  {
+    unit: 3, id: 8, word: "let's", pos: "phr.", meaning: "讓我們一起",
+    examples: [
+      "Let's watch TV now.",
+      "Let's go to the park this afternoon.",
+      "Let's help our teacher clean the classroom.",
+      "Let's play a game before dinner."
+    ]
+  },
+  {
+    unit: 3, id: 9, word: "careful", pos: "adj.", meaning: "小心的",
+    examples: [
+      "Hey, be careful.",
+      "Be careful with the glass.",
+      "She is careful when crossing the street.",
+      "Please be careful in the lab."
+    ]
+  },
+  {
+    unit: 3, id: 10, word: "museum", pos: "n.", meaning: "博物館",
+    examples: [
+      "Please don't run in the museum.",
+      "The museum is very big.",
+      "We saw old cars in the museum.",
+      "Let's visit the museum tomorrow."
+    ]
+  },
+  {
+    unit: 3, id: 11, word: "Hurry!", pos: "interj.", meaning: "快點！",
+    examples: [
+      "Hurry up, Sandy!",
+      "Hurry, the bus is coming!",
+      "Hurry, we are late for class!",
+      "Hurry, it's time for dinner!"
+    ]
+  },
+  {
+    unit: 3, id: 12, word: "please", pos: "int.", meaning: "請；拜託",
+    examples: [
+      "Please close the door for me.",
+      "Please help me with my homework.",
+      "Please sit down.",
+      "Please be quiet in class."
+    ]
+  },
+  {
+    unit: 3, id: 13, word: "wait", pos: "v.", meaning: "等待",
+    examples: [
+      "Wait. Where is my bag?",
+      "Please wait for me.",
+      "Wait at the bus stop.",
+      "Wait, I am not ready."
+    ]
+  },
+  {
+    unit: 3, id: 14, word: "man", pos: "n.", meaning: "男人",
+    examples: [
+      "That man is my uncle.",
+      "The man is tall.",
+      "I saw a man in the park.",
+      "The man is reading a book."
+    ]
+  },
+  {
+    unit: 3, id: 15, word: "now", pos: "adv.", meaning: "現在",
+    examples: [
+      "Freddy is in the bathroom now.",
+      "I am busy now.",
+      "Let's eat lunch now.",
+      "She is studying now."
+    ]
+  },
+  {
+    unit: 3, id: 16, word: "or", pos: "conj.", meaning: "或者",
+    examples: [
+      "Don't eat or drink on the bus.",
+      "Do you want tea or coffee?",
+      "We can play basketball or soccer.",
+      "Is it Monday or Tuesday today?"
+    ]
+  },
+  {
+    unit: 3, id: 17, word: "time", pos: "n.", meaning: "次；時間",
+    examples: [
+      "Please be careful this time.",
+      "What time is it now?",
+      "I don't have much time.",
+      "It's time to go home."
+    ]
+  },
+  {
+    unit: 3, id: 18, word: "wake up", pos: "phr.", meaning: "醒來；叫醒",
+    examples: [
+      "Can you go wake your sister up?",
+      "I wake up at seven every day.",
+      "Wake up, it's time for school.",
+      "He wakes up late on Sundays."
+    ]
+  },
+  {
+    unit: 3, id: 19, word: "class", pos: "n.", meaning: "課；班級",
+    examples: [
+      "Please follow class rules.",
+      "Our class is very big.",
+      "I have math class today.",
+      "The class starts at nine."
+    ]
+  },
+  {
+    unit: 3, id: 20, word: "Oh my!", pos: "interj.", meaning: "天哪！",
+    examples: [
+      "Oh my! It's a mummy.",
+      "Oh my! The dog is so cute.",
+      "Oh my! We are late.",
+      "Oh my! It's raining again."
+    ]
+  },
+  {
+    unit: 3, id: 21, word: "see", pos: "v.", meaning: "看見",
+    examples: [
+      "Can you see the bird in the tree?",
+      "I can see the stars.",
+      "She sees her friend at school.",
+      "Do you see the cat under the desk?"
+    ]
+  },
+  {
+    unit: 3, id: 22, word: "quiet", pos: "adj.", meaning: "安靜的",
+    examples: [
+      "Ken is a quiet student.",
+      "The library is quiet.",
+      "Please be quiet in class.",
+      "He is a quiet boy."
+    ]
+  },
+  {
+    unit: 3, id: 23, word: "turn off", pos: "phr.", meaning: "關掉",
+    examples: [
+      "Turn off the TV and go to bed now.",
+      "Please turn off the light.",
+      "Turn off your phone in class.",
+      "Turn off the fan, it's cold."
+    ]
+  },
+  {
+    unit: 3, id: 24, word: "sign", pos: "n.", meaning: "標誌",
+    examples: [
+      "Look at the sign. You can't eat here.",
+      "The sign is on the wall.",
+      "This sign says “No Parking.”",
+      "I saw a stop sign on the street."
+    ]
+  },
+  {
+    unit: 3, id: 25, word: "talk", pos: "v.", meaning: "說話",
+    examples: [
+      "Let's not talk here.",
+      "Don't talk in the library.",
+      "She talks with her friend.",
+      "Can we talk later?"
+    ]
+  },
+  {
+    unit: 3,
+    id: 27,
+    word: "turn",
+    pos: "n.",
+    meaning: "輪到的機會",
+    examples: [
+      "Is it my turn?",
+      "It's your turn to play.",
+      "Wait for your turn.",
+      "This is my turn to speak."
+    ]
+  },
+  {
+    unit: 3,
+    id: 28,
+    word: "check",
+    pos: "v.",
+    meaning: "檢查；核對",
+    examples: [
+      "Let me check.",
+      "Check your homework.",
+      "Please check the time.",
+      "He checked the bag."
+    ]
+  },
+  {
+    unit: 3,
+    id: 29,
+    word: "wash",
+    pos: "v.",
+    meaning: "清洗",
+    examples: [
+      "We can wash your dad's car this afternoon.",
+      "Wash your hands before dinner.",
+      "She washes her clothes.",
+      "Let's wash the dishes."
+    ]
+  },
+  {
+    unit: 3,
+    id: 30,
+    word: "after class",
+    pos: "phr.",
+    meaning: "下課後",
+    examples: [
+      "Let's play basketball after class.",
+      "I go home after class.",
+      "We eat lunch after class.",
+      "He plays games after class."
+    ]
+  },
+  {
+    unit: 3,
+    id: 31,
+    word: "follow",
+    pos: "v.",
+    meaning: "遵守；跟隨",
+    examples: [
+      "Please follow the museum rules.",
+      "Follow me, please.",
+      "We follow the teacher.",
+      "Follow the rules in class."
+    ]
+  },
+  {
+    unit: 3,
+    id: 32,
+    word: "rule",
+    pos: "n.",
+    meaning: "規則",
+    examples: [
+      "It's a classroom rule.",
+      "This is an important rule.",
+      "We must follow the rules.",
+      "Don't break the rules."
+    ]
+  },
+      {
+        unit: 3, id: 33, word: "safe", pos: "adj.", meaning: "安全的",
+        examples: [
+          "That's not safe.",
+          "It's safe to cross the street now.",
+          "This place is safe for children.",
+          "Wear a helmet to stay safe."
+        ]
+      },
+	 {
+    unit: 4, id: 1, word: "music video", pos: "n.", meaning: "音樂影片",
+    examples: [
+      "I am watching Mayday's new music video.",
+      "She likes to watch music videos online.",
+      "This music video is very popular.",
+      "Let's take a look at the music video."
+    ]
+  },
+    {
+    unit: 4, id: 2, word: "band", pos: "n.", meaning: "樂團",
+    examples: [
+      "My favorite band is singing on stage.",
+      "The band is playing a new song.",
+      "He is in a rock band.",
+      "We saw a band at the party."
+    ]
+  },
+  {
+    unit: 4, id: 3, word: "take a look", pos: "phr.", meaning: "看一下",
+    examples: [
+      "Come take a look.",
+      "Take a look at this picture.",
+      "Let's take a look at the report.",
+      "Can you take a look at my homework?"
+    ]
+  },
+  {
+    unit: 4, id: 4, word: "cute", pos: "adj.", meaning: "可愛的",
+    examples: [
+      "Toto is a really cute dog.",
+      "The baby is very cute.",
+      "She looks cute in that dress.",
+      "This cat is so cute."
+    ]
+  },
+  {
+    unit: 4, id: 5, word: "great", pos: "adj.", meaning: "很棒的",
+    examples: [
+      "That's great!",
+      "This is a great idea.",
+      "You did a great job.",
+      "It was a great party."
+    ]
+  },
+  {
+    unit: 4, id: 6, word: "free", pos: "adj.", meaning: "有空的",
+    examples: [
+      "Are you free on Sunday?",
+      "I am free this afternoon.",
+      "She is free after class.",
+      "He is free to help us."
+    ]
+  },
+  {
+    unit: 4, id: 7, word: "weekend", pos: "n.", meaning: "週末",
+    examples: [
+      "The baseball game is this weekend.",
+      "We go shopping on the weekend.",
+      "She is free this weekend.",
+      "Let's have a party this weekend."
+    ]
+  },
+  {
+    unit: 4, id: 8, word: "Saturday", pos: "n.", meaning: "星期六",
+    examples: [
+      "The welcome party is on Saturday night.",
+      "We play basketball on Saturday.",
+      "Saturday is my favorite day.",
+      "I am busy this Saturday."
+    ]
+  },
+  {
+    unit: 4, id: 9, word: "ready", pos: "adj.", meaning: "準備好的",
+    examples: [
+      "Are you ready for school?",
+      "She is ready to go.",
+      "I am ready for the test.",
+      "We are ready for the party."
+    ]
+  },
+  {
+    unit: 4, id: 10, word: "p.m.", pos: "adv.", meaning: "下午；晚上",
+    examples: [
+      "It's 8:25 p.m. now.",
+      "The party starts at 7 p.m.",
+      "We eat dinner at 6 p.m.",
+      "The movie is at 9 p.m."
+    ]
+  },
+  {
+    unit: 4, id: 11, word: "o'clock", pos: "adv.", meaning: "點鐘",
+    examples: [
+      "Wake me up at three o'clock.",
+      "It's five o'clock now.",
+      "The class starts at nine o'clock.",
+      "Let's meet at ten o'clock."
+    ]
+  },
+  {
+    unit: 4, id: 12, word: "day", pos: "n.", meaning: "一天；日子",
+    examples: [
+      "It's a great day today.",
+      "This is a busy day.",
+      "We have class every day.",
+      "Sunday is a happy day."
+    ]
+  },
+  {
+    unit: 4, id: 13, word: "today", pos: "n.", meaning: "今天",
+    examples: [
+      "It is Teacher's Day today.",
+      "I am busy today.",
+      "She is free today.",
+      "We have a test today."
+    ]
+  },
+  {
+    unit: 4, id: 14, word: "Friday", pos: "n.", meaning: "星期五",
+    examples: [
+      "It's Friday.",
+      "We have a party on Friday.",
+      "Friday is the last day of school.",
+      "She is free this Friday."
+    ]
+  },
+  {
+    unit: 4, id: 15, word: "Sunday", pos: "n.", meaning: "星期日",
+    examples: [
+      "The zoo is not open on Sundays.",
+      "We go to church on Sunday.",
+      "Sunday is a holiday.",
+      "I am free this Sunday."
+    ]
+  },
+  {
+    unit: 4, id: 16, word: "Monday", pos: "n.", meaning: "星期一",
+    examples: [
+      "The music class is on Monday afternoon.",
+      "We go back to school on Monday.",
+      "Monday is the first day of the week.",
+      "I am busy on Monday."
+    ]
+  },
+  {
+    unit: 4, id: 17, word: "Tuesday", pos: "n.", meaning: "星期二",
+    examples: [
+      "Can I go to your house on Tuesday?",
+      "We have a test on Tuesday.",
+      "Tuesday is after Monday.",
+      "She is free this Tuesday."
+    ]
+  },
+  {
+    unit: 4, id: 18, word: "Wednesday", pos: "n.", meaning: "星期三",
+    examples: [
+      "Brenda is free this Wednesday.",
+      "We play basketball on Wednesday.",
+      "Wednesday is in the middle of the week.",
+      "I am busy on Wednesday."
+    ]
+  },
+  {
+    unit: 4, id: 19, word: "Thursday", pos: "n.", meaning: "星期四",
+    examples: [
+      "Thursday is between Wednesday and Friday.",
+      "We have English class on Thursday.",
+      "Thursday is a busy day.",
+      "She is free this Thursday."
+    ]
+  },
+  {
+    unit: 4, id: 20, word: "week", pos: "n.", meaning: "週；星期",
+    examples: [
+      "The new museum is open this week.",
+      "We have five classes this week.",
+      "This week is very busy.",
+      "She is free this week."
+    ]
+  },
+  {
+    unit: 4, id: 21, word: "a.m.", pos: "adv.", meaning: "上午；凌晨",
+    examples: [
+      "The game is at 10:50 a.m.",
+      "I wake up at 7 a.m.",
+      "The class starts at 9 a.m.",
+      "We eat breakfast at 8 a.m."
+    ]
+  },
+  {
+    unit: 4, id: 22, word: "study", pos: "v.", meaning: "學習",
+    examples: [
+      "Peter is studying in his room.",
+      "I study English every day.",
+      "She studies math at school.",
+      "We study together after class."
+    ]
+  },
+  {
+    unit: 4, id: 23, word: "English", pos: "n.", meaning: "英文",
+    examples: [
+      "Mr. Cheng is my English teacher.",
+      "I study English every day.",
+      "English is an important subject.",
+      "We speak English in class."
+    ]
+  },
+  {
+    unit: 4, id: 24, word: "take a walk", pos: "phr.", meaning: "散步",
+    examples: [
+      "Let's take a walk together.",
+      "We take a walk in the park.",
+      "She takes a walk after dinner.",
+      "He likes to take a walk in the morning."
+    ]
+  },
+  {
+    unit: 4, id: 25, word: "movie", pos: "n.", meaning: "電影",
+    examples: [
+      "Is the new movie good?",
+      "We watch a movie on Friday.",
+      "She likes action movies.",
+      "Let's see a movie together."
+    ]
+  },
+     {
+    unit: 4, id: 26, word: "take a picture", pos: "phr.", meaning: "拍照",
+    examples: [
+      "Everyone is taking a picture.",
+      "Let's take a picture together.",
+      "She is taking a picture of the dog.",
+      "Can you take a picture for me?"
+    ]
+  },
+  {
+    unit: 4, id: 27, word: "party", pos: "n.", meaning: "派對",
+    examples: [
+      "I'm at Timothy's party.",
+      "We have a party on Friday.",
+      "The party is very fun.",
+      "Let's go to the birthday party."
+    ]
+  },
+  {
+    unit: 4, id: 28, word: "report", pos: "v./n.", meaning: "報導",
+    examples: [
+      "She's reporting from the singer's new house.",
+      "I write a report for school.",
+      "The report is about animals.",
+      "He reports the news every day."
+    ]
+  },
+  {
+    unit: 4, id: 29, word: "popular", pos: "adj.", meaning: "受歡迎的",
+    examples: [
+      "The singer is very popular.",
+      "This movie is popular with students.",
+      "Basketball is popular in Taiwan.",
+      "She is a popular teacher."
+    ]
+  },
+  {
+    unit: 4, id: 30, word: "fan", pos: "n.", meaning: "粉絲",
+    examples: [
+      "The fan is taking a picture with the writer.",
+      "He is a big fan of Mayday.",
+      "Fans are waiting outside the museum.",
+      "She is a fan of English songs."
+    ]
+  },
+  {
+    unit: 4, id: 31, word: "shake hands", pos: "phr.", meaning: "握手",
+    examples: [
+      "James is shaking hands with his teacher.",
+      "Let's shake hands.",
+      "They shake hands after the game.",
+      "He shakes hands with his friend."
+    ]
+  },
+  {
+    unit: 4, id: 32, word: "everyone", pos: "pron.", meaning: "每個人",
+    examples: [
+      "The drinks are not enough for everyone.",
+      "Everyone is happy today.",
+      "Everyone likes the party.",
+      "Everyone is in the classroom."
+    ]
+  },
+  {
+    unit: 4, id: 33, word: "sign", pos: "v.", meaning: "簽名",
+    examples: [
+      "Can you sign this picture for me?",
+      "He signs his name on the paper.",
+      "Please sign the report.",
+      "She signs the book for her fans."
+    ]
+  }  
+    ];
+
+
+    // === 功能 ===   
+
+    function getSelectedUnits(sectionId) {
+      const checkboxes = document.querySelectorAll(`#${sectionId} .unitSelect input[type=checkbox]:checked`);
+      return Array.from(checkboxes).map(cb => parseInt(cb.value));
+    }
+
+    function selectAll(sectionId) {
+      document.querySelectorAll(`#${sectionId} .unitSelect input[type=checkbox]`).forEach(cb => cb.checked = true);
+    }
+    function deselectAll(sectionId) {
+      document.querySelectorAll(`#${sectionId} .unitSelect input[type=checkbox]`).forEach(cb => cb.checked = false);
+    }
+
+    function renderWordTable() {
+      const selectedUnits = getSelectedUnits("wordList");
+      const table = document.getElementById("wordTable");
+      table.innerHTML = `
+        <tr>
+          <th>Unit</th><th>編號</th><th>單字</th><th>詞性</th><th>中文意思</th>
+          <th>課本例句</th><th>額外例句1</th><th>額外例句2</th><th>額外例句3</th>
+        </tr>`;
+      
+      questions.filter(q => selectedUnits.includes(q.unit)).forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.unit}</td>
+          <td>${item.id}</td>
+          <td class="word">${item.word}</td>
+          <td>${item.pos}</td>
+          <td>${item.meaning}</td>
+          <td class="sentence">${item.examples[0]}</td>
+          <td class="sentence">${item.examples[1]}</td>
+          <td class="sentence">${item.examples[2]}</td>
+          <td class="sentence">${item.examples[3]}</td>
+        `;
+        row.querySelector(".word").addEventListener("click", () => speak(item.word));
+        row.querySelectorAll(".sentence").forEach((cell, idx) => {
+          cell.addEventListener("click", () => speak(item.examples[idx]));
+        });
+        table.appendChild(row);
+      });
+    }
+
+    function normalizeText(text) {
+      return text.replace(/\bI'm\b/gi, "I am").replace(/\bCan't\b/gi, "Cannot");
+    }
+
+    let currentQuestion = {};
+    let speechRate = 0.8;
+    let selectedVoice = null;
+
+    function nextQuestion() {
+      const selectedUnits = getSelectedUnits("practice");
+      const pool = questions.filter(q => selectedUnits.includes(q.unit));
+      if (pool.length === 0) {
+        document.getElementById("question").innerText = "⚠️ 請先選擇至少一個 Unit";
+        return;
+      }
+      currentQuestion = pool[Math.floor(Math.random() * pool.length)];
+
+      // 顯示題目：首字母 + 底線 + 最後字母
+      const word = currentQuestion.word;
+      let hintWord = "";
+      if (word.length > 2) {
+        hintWord = word[0] + "_".repeat(word.length - 2) + word[word.length - 1];
+      } else {
+        hintWord = "_".repeat(word.length);
+      }
+            const regex = new RegExp(word, "gi");
+      const questionText = currentQuestion.examples[0].replace(regex, hintWord);
+
+      document.getElementById("question").innerText = questionText;
+      document.getElementById("answer").value = "";
+      document.getElementById("result").innerText = "";
+    }
+
+    // === 填空練習檢查與朗讀 ===
+    function checkAnswer() {
+      const userAnswer = document.getElementById("answer").value.trim();
+      if (userAnswer.toLowerCase() === currentQuestion.word.toLowerCase()) {
+        document.getElementById("result").innerText = "✅ 正確！";
+      } else {
+        document.getElementById("result").innerText = "❌ 錯誤，正確答案是: " + currentQuestion.word;
+      }
+    }
+
+    function readQuestion() { 
+      speak(currentQuestion.examples[0]); 
+    }
+
+    function speak(text) {
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(normalizeText(text));
+      utterance.lang = 'en-US';
+      utterance.rate = speechRate;
+      if (selectedVoice) utterance.voice = selectedVoice;
+      speechSynthesis.speak(utterance);
+    }
+
+    function updateSpeed() {
+      speechRate = parseFloat(document.getElementById("speed").value);
+    }
+    function updateSpeedWord() {
+      speechRate = parseFloat(document.getElementById("speedWord").value);
+    }
+
+    // === Voice 選單初始化 ===
+    function populateVoiceList() {
+      const voices = speechSynthesis.getVoices();
+
+      // 填空練習區選單
+      const voiceSelect = document.getElementById("voiceSelect");
+      voiceSelect.innerHTML = "";
+      voices.forEach((voice, i) => {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        voiceSelect.appendChild(option);
+      });
+      voiceSelect.onchange = () => {
+        selectedVoice = voices[voiceSelect.value];
+      };
+
+      // 單字清單區選單
+      const voiceSelectWord = document.getElementById("voiceSelectWord");
+      voiceSelectWord.innerHTML = "";
+      voices.forEach((voice, i) => {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        voiceSelectWord.appendChild(option);
+      });
+      voiceSelectWord.onchange = () => {
+        selectedVoice = voices[voiceSelectWord.value];
+      };
+
+      if (voices.length > 0) {
+        selectedVoice = voices[0]; // 預設第一個 voice
+      }
+    }
+
+    speechSynthesis.onvoiceschanged = populateVoiceList;
+    populateVoiceList();
+
+    document.getElementById("answer").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") checkAnswer();
+    });
+
+    // === 區塊切換 ===
+    function showSection(sectionId) {
+      document.getElementById("wordList").classList.add("hidden");
+      document.getElementById("practice").classList.add("hidden");
+      document.getElementById(sectionId).classList.remove("hidden");
+      if(sectionId === "practice") nextQuestion();
+      if(sectionId === "wordList") renderWordTable();
+    }
+
+    // 預設顯示單字清單
+    showSection("wordList");
+  </script>
+</body>
+</html>
