@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>英文拼字聽寫測驗</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    input[type="text"], select {
+      padding: 8px;
+      font-size: 18px;
+      width: 300px;
+      margin: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+    }
+    #result, #stats {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🔊 英文拼字聽寫測驗</h2>
+<p>系統會念出英文單字，請輸入正確拼寫</p>
+
+<label for="partSelect">選擇測驗區段：</label>
+<select id="partSelect">
+  <option value="1">Part 1</option>
+  <option value="2">Part 2</option>
+  <option value="3">Part 3</option>
+  <option value="4">Part 4</option>
+  <option value="all">全部單字</option>
+</select>
+
+<label for="countSelect">題數：</label>
+<select id="countSelect">
+  <option value="10">10</option>
+  <option value="15">15</option>
+  <option value="20">20</option>
+  <option value="25">25</option>
+</select>
+
+<label for="rateSelect">語速：</label>
+<select id="rateSelect">
+  <option value="0.6">慢速</option>
+  <option value="0.8" selected>中速</option>
+  <option value="1.2">快速</option>
+</select>
+<br>
+
+<button onclick="startQuiz()">開始測驗</button>
+<button onclick="nextQuestion()" disabled id="nextBtn">下一題</button>
+<button onclick="repeatAudio()" disabled id="repeatBtn">再聽一次</button>
+<br><br>
+
+<input type="text" id="answerInput" placeholder="請輸入英文單字" disabled>
+<button onclick="checkAnswer()" id="submitBtn" disabled>提交</button>
+
+<div id="result"></div>
+<div id="stats"></div>
+
+<script>
+const vocabParts = {
+  1: ["abandon", "accuse", "alter", "anchor", "anchovy", "annual", "arrowhead", "artichoke", "assistant", "astonish",
+      "astronaut", "bellow", "biscuit", "bodyguard", "bronze", "bulge", "bumble", "butcher", "candidate", "champion",
+      "channel", "commit", "compete", "conflict", "constantly"],
+  2: ["criminal", "elevation", "embrace", "encounter", "entertain", "exceed", "feeble", "fierce", "fossil", "gallop",
+      "grizzly", "harmony", "heir", "horror", "humble", "humor", "inspire", "instruct", "knuckle", "ladle",
+      "lynx", "maiden", "marble", "melody", "mercy"],
+  3: ["mulberry", "mumble", "museum", "musician", "mustang", "mustard", "myrtle", "nebula", "neglect", "oyster",
+      "parcel", "parlor", "plunge", "praise", "priest", "process", "product", "propose", "qualify", "quarrel",
+      "realm", "reign", "rejoice", "relative", "retreat"],
+  4: ["saddle", "sagebrush", "scamper", "scarce", "serious", "severe", "similar", "sincere", "startle", "stumble",
+      "syrup", "telegram", "tread", "tumble", "twinkle", "university", "virtue", "voyage", "watercress", "weapon",
+      "weave", "wicked", "width", "wobble", "wrath"]
+};
+
+let quizWords = [];
+let currentWord = null;
+let currentIndex = 0;
+let correctCount = 0;
+
+function startQuiz() {
+  const part = document.getElementById("partSelect").value;
+  const count = parseInt(document.getElementById("countSelect").value);
+
+  let sourceWords = [];
+  if (part === "all") {
+    sourceWords = Object.values(vocabParts).flat();
+  } else {
+    sourceWords = vocabParts[part];
+  }
+
+  quizWords = sourceWords.sort(() => 0.5 - Math.random()).slice(0, count);
+  currentIndex = 0;
+  correctCount = 0;
+  document.getElementById("stats").textContent = "";
+  document.getElementById("result").textContent = "";
+  document.getElementById("nextBtn").disabled = true;
+  document.getElementById("submitBtn").disabled = false;
+  document.getElementById("repeatBtn").disabled = false;
+  document.getElementById("answerInput").disabled = false;
+  nextQuestion();
+}
+
+function nextQuestion() {
+  if (currentIndex >= quizWords.length) {
+    const score = Math.round((correctCount / quizWords.length) * 100);
+    document.getElementById("result").textContent = `🎉 測驗結束！共答對 ${correctCount} 題，成績：${score}%`;
+    document.getElementById("nextBtn").disabled = true;
+    document.getElementById("submitBtn").disabled = true;
+    document.getElementById("repeatBtn").disabled = true;
+    document.getElementById("answerInput").disabled = true;
+    return;
+  }
+
+  currentWord = quizWords[currentIndex];
+  speakWord(currentWord);
+  document.getElementById("answerInput").value = "";
+  document.getElementById("result").textContent = "";
+  document.getElementById("nextBtn").disabled = true;
+  document.getElementById("submitBtn").disabled = false;
+  document.getElementById("repeatBtn").disabled = false;
+  document.getElementById("answerInput").disabled = false;
+  document.getElementById("answerInput").focus();
+}
+
+function checkAnswer() {
+  const userAnswer = document.getElementById("answerInput").value.trim().toLowerCase();
+  if (!currentWord) return;
+
+  if (userAnswer === currentWord.toLowerCase()) {
+    document.getElementById("result").textContent = "✅ 正確！";
+    correctCount++;
+  } else {
+    document.getElementById("result").textContent = `❌ 錯誤，正確答案是：${currentWord}`;
+  }
+
+  currentIndex++;
+  document.getElementById("nextBtn").disabled = false;
+  document.getElementById("submitBtn").disabled = true;
+  document.getElementById("repeatBtn").disabled = true;
+  document.getElementById("answerInput").disabled = true;
+
+  document.getElementById("stats").textContent = `目前進度：${currentIndex} / ${quizWords.length}　答對：${correctCount}`;
+}
+
+function repeatAudio() {
+  if (currentWord) speakWord(currentWord);
+}
+
+function speakWord(word) {
+  const rate = parseFloat(document.getElementById("rateSelect").value);
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = 'en-US';
+  utterance.rate = rate;
+  speechSynthesis.speak(utterance);
+}
+
+window.onload = function () {
+  document.getElementById("answerInput").addEventListener("keydown", function (event) {
+    if (event.key === "Enter" && !document.getElementById("submitBtn").disabled) {
+      checkAnswer();
+    }
+  });
+};
+</script>
+
+</body>
+</html>

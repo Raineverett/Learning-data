@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vocabulary Table with Search and Pronunciation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    h2 {
+      text-align: center;
+    }
+    #searchBox {
+      display: block;
+      margin: 20px auto;
+      padding: 8px;
+      width: 60%;
+      font-size: 16px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 95%;
+      margin: 0 auto 40px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: center;
+    }
+    td.word {
+      cursor: pointer;
+      color: blue;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<h2>英文單字表（點擊單字發音）</h2>
+<input type="text" id="searchBox" placeholder="輸入英文、中文或詞性來搜尋…">
+
+<table id="vocabTable">
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>Words</th>
+      <th>中文</th>
+      <th>詞性</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><<tr><td>Part 1</td><td class="word" onclick="speak('abandon')">abandon</td><td>放棄</td><td>動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('accuse')">accuse</td><td>指控</td><td>動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('alter')">alter</td><td>改變</td><td>動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('anchor')">anchor</td><td>錨；固定</td><td>名詞／動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('anchovy')">anchovy</td><td>鯷魚</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('annual')">annual</td><td>每年的</td><td>形容詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('arrowhead')">arrowhead</td><td>箭頭</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('artichoke')">artichoke</td><td>洋薊</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('assistant')">assistant</td><td>助理</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('astonish')">astonish</td><td>使驚訝</td><td>動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('astronaut')">astronaut</td><td>太空人</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('bellow')">bellow</td><td>吼叫</td><td>動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('biscuit')">biscuit</td><td>餅乾</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('bodyguard')">bodyguard</td><td>保鑣</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('bronze')">bronze</td><td>青銅</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('bulge')">bulge</td><td>凸起</td><td>名詞／動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('bumble')">bumble</td><td>笨拙地行動</td><td>動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('butcher')">butcher</td><td>屠夫</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('candidate')">candidate</td><td>候選人</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('champion')">champion</td><td>冠軍</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('channel')">channel</td><td>頻道；通道</td><td>名詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('commit')">commit</td><td>承諾；犯（罪）</td><td>動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('compete')">compete</td><td>競爭</td><td>動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('conflict')">conflict</td><td>衝突</td><td>名詞／動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('constantly')">constantly</td><td>持續地</td><td>副詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('criminal')">criminal</td><td>罪犯</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('elevation')">elevation</td><td>高度；提升</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('embrace')">embrace</td><td>擁抱</td><td>動詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('encounter')">encounter</td><td>遭遇</td><td>動詞／名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('entertain')">entertain</td><td>娛樂</td><td>動詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('exceed')">exceed</td><td>超過</td><td>動詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('feeble')">feeble</td><td>虛弱的</td><td>形容詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('fierce')">fierce</td><td>激烈的</td><td>形容詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('fossil')">fossil</td><td>化石</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('gallop')">gallop</td><td>奔馳</td><td>動詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('grizzly')">grizzly</td><td>灰熊</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('harmony')">harmony</td><td>和諧</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('heir')">heir</td><td>繼承人</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('horror')">horror</td><td>恐怖</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('humble')">humble</td><td>謙虛的</td><td>形容詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('humor')">humor</td><td>幽默</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('inspire')">inspire</td><td>激勵</td><td>動詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('instruct')">instruct</td><td>指導</td><td>動詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('knuckle')">knuckle</td><td>指關節</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('ladle')">ladle</td><td>湯杓</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('lynx')">lynx</td><td>山貓</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('maiden')">maiden</td><td>少女</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('marble')">marble</td><td>大理石</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('melody')">melody</td><td>旋律</td><td>名詞</td></tr>
+<tr><td>Part 2</td><td class="word" onclick="speak('mercy')">mercy</td><td>慈悲</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('mulberry')">mulberry</td><td>桑葚</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('mumble')">mumble</td><td>咕噥</td><td>動詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('museum')">museum</td><td>博物館</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('musician')">musician</td><td>音樂家</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('mustang')">mustang</td><td>野馬</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('mustard')">mustard</td><td>芥末</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('myrtle')">myrtle</td><td>桃金孃</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('nebula')">nebula</td><td>星雲</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('neglect')">neglect</td><td>忽略</td><td>動詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('oyster')">oyster</td><td>牡蠣</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('parcel')">parcel</td><td>包裹</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('parlor')">parlor</td><td>客廳</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('plunge')">plunge</td><td>跳入；投入</td><td>動詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('praise')">praise</td><td>讚美</td><td>動詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('priest')">priest</td><td>神父</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('process')">process</td><td>過程</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('product')">product</td><td>產品</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('propose')">propose</td><td>提議</td><td>動詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('qualify')">qualify</td><td>使合格</td><td>動詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('quarrel')">quarrel</td><td>爭吵</td><td>名詞／動詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('realm')">realm</td><td>領域</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('reign')">reign</td><td>統治</td><td>動詞／名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('rejoice')">rejoice</td><td>歡喜</td><td>動詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('relative')">relative</td><td>親戚</td><td>名詞</td></tr>
+<tr><td>Part 3</td><td class="word" onclick="speak('retreat')">retreat</td><td>撤退</td><td>動詞／名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('saddle')">saddle</td><td>馬鞍</td><td>名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('sagebrush')">sagebrush</td><td>灌木</td><td>名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('scamper')">scamper</td><td>奔跑</td><td>動詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('scarce')">scarce</td><td>稀少的</td><td>形容詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('serious')">serious</td><td>嚴肅的</td><td>形容詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('severe')">severe</td><td>嚴重的</td><td>形容詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('similar')">similar</td><td>相似的</td><td>形容詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('sincere')">sincere</td><td>真誠的</td><td>形容詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('startle')">startle</td><td>驚嚇</td><td>動詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('stumble')">stumble</td><td>絆倒</td><td>動詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('syrup')">syrup</td><td>糖漿</td><td>名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('telegram')">telegram</td><td>電報</td><td>名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('tread')">tread</td><td>踩；行走</td><td>動詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('tumble')">tumble</td><td>跌倒</td><td>動詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('twinkle')">twinkle</td><td>閃爍</td><td>動詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('university')">university</td><td>大學</td><td>名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('virtue')">virtue</td><td>美德</td><td>名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('voyage')">voyage</td><td>航行</td><td>名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('watercress')">watercress</td><td>西洋菜</td><td>名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('weapon')">weapon</td><td>武器</td><td>名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('weave')">weave</td><td>編織</td><td>動詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('wicked')">wicked</td><td>邪惡的</td><td>形容詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('width')">width</td><td>寬度</td><td>名詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('wobble')">wobble</td><td>搖晃</td><td>動詞</td></tr>
+<tr><td>Part 4</td><td class="word" onclick="speak('wrath')">wrath</td><td>憤怒</td><td>名詞</td></tr>
+  </tbody>
+</table>
+
+<script>
+  function speak(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    speechSynthesis.speak(utterance);
+  }
+
+  document.getElementById('searchBox').addEventListener('input', function () {
+    const filter = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#vocabTable tbody tr');
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      row.style.display = text.includes(filter) ? '' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>
