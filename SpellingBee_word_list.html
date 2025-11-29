@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
   <title>Vocabulary Table with Search and Pronunciation</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    h2 {
-      text-align: center;
-    }
+    body { font-family: Arial, sans-serif; }
+    h2 { text-align: center; }
     #searchBox {
       display: block;
       margin: 20px auto;
@@ -17,21 +13,11 @@
       width: 60%;
       font-size: 16px;
     }
-    table {
-      border-collapse: collapse;
-      width: 95%;
-      margin: 0 auto 40px;
-    }
-    th, td {
-      border: 1px solid #aaa;
-      padding: 8px;
-      text-align: center;
-    }
-    td.word {
-      cursor: pointer;
-      color: blue;
-      text-decoration: underline;
-    }
+    .filters { text-align: center; margin: 15px 0; }
+    .filters button { margin: 0 5px; padding: 5px 10px; }
+    table { border-collapse: collapse; width: 95%; margin: 0 auto 40px; }
+    th, td { border: 1px solid #aaa; padding: 8px; text-align: center; }
+    td.word { cursor: pointer; color: blue; text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -39,17 +25,26 @@
 <h2>英文單字表（點擊單字發音）</h2>
 <input type="text" id="searchBox" placeholder="輸入英文、中文或詞性來搜尋…">
 
+<div class="filters">
+  <label><input type="checkbox" class="sectionFilter" value="Part 1"> Part 1</label>
+  <label><input type="checkbox" class="sectionFilter" value="Part 2"> Part 2</label>
+  <label><input type="checkbox" class="sectionFilter" value="Part 3"> Part 3</label>
+  <label><input type="checkbox" class="sectionFilter" value="Part 4"> Part 4</label>
+  <label><input type="checkbox" class="sectionFilter" value="Week 15"> Week 15</label>
+  <label><input type="checkbox" class="sectionFilter" value="Week 16"> Week 16</label>
+  <label><input type="checkbox" class="sectionFilter" value="Week 17"> Week 17</label>
+  <label><input type="checkbox" class="sectionFilter" value="Week 18"> Week 18</label>
+  <br>
+  <button onclick="selectAll()">全選</button>
+  <button onclick="clearAll()">清除選擇</button>
+</div>
+
 <table id="vocabTable">
   <thead>
-    <tr>
-      <th>Section</th>
-      <th>Words</th>
-      <th>中文</th>
-      <th>詞性</th>
-    </tr>
+    <tr><th>Section</th><th>Words</th><th>中文</th><th>詞性</th></tr>
   </thead>
   <tbody>
-    <tr><<tr><td>Part 1</td><td class="word" onclick="speak('abandon')">abandon</td><td>放棄</td><td>動詞</td></tr>
+<tr><td>Part 1</td><td class="word" onclick="speak('abandon')">abandon</td><td>放棄</td><td>動詞</td></tr>
 <tr><td>Part 1</td><td class="word" onclick="speak('accuse')">accuse</td><td>指控</td><td>動詞</td></tr>
 <tr><td>Part 1</td><td class="word" onclick="speak('alter')">alter</td><td>改變</td><td>動詞</td></tr>
 <tr><td>Part 1</td><td class="word" onclick="speak('anchor')">anchor</td><td>錨；固定</td><td>名詞／動詞</td></tr>
@@ -190,18 +185,17 @@
 <tr><td>Week 15</td><td class="word" onclick="speak('hedge')">hedge</td><td>樹籬</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('badge')">badge</td><td>徽章</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('cabbage')">cabbage</td><td>捲心菜</td><td>n.</td></tr>
-<tr><td>Week 15</td><td class="word" onclick="speak('ledge')">ledge</td><td>岩架</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('manage')">manage</td><td>管理</td><td>v.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('luggage')">luggage</td><td>行李</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('judge')">judge</td><td>法官／判斷</td><td>n./v.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('damage')">damage</td><td>損害</td><td>n./v.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('dodge')">dodge</td><td>閃避</td><td>v.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('package')">package</td><td>包裹</td><td>n.</td></tr>
-<tr><td>Week 15</td><td class="word" onclick="speak('average')">average</td><td>平均的／平均值</td><td>adj./n.</td></tr>
+<tr><td>Week 15</td><td class="word" onclick="speak('average')">average</td><td>平均</td><td>adj./n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('fragile')">fragile</td><td>易碎的</td><td>adj.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('image')">image</td><td>影像</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('pledge')">pledge</td><td>誓言／保證</td><td>n./v.</td></tr>
-<tr><td>Week 15</td><td class="word" onclick="speak('voyage')">voyage</td><td>航海</td><td>n.</td></tr>
+<tr><td>Week 15</td><td class="word" onclick="speak('voyage')">voyage</td><td>航海／航行</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('journal')">journal</td><td>日記</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('reminded')">reminded</td><td>提醒</td><td>v.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('yawning')">yawning</td><td>打哈欠</td><td>v./n.</td></tr>
@@ -209,7 +203,7 @@
 <tr><td>Week 15</td><td class="word" onclick="speak('worn out')">worn out</td><td>疲憊的</td><td>adj.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('message')">message</td><td>訊息</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('historical')">historical</td><td>歷史的</td><td>adj.</td></tr>
-<tr><td>Week 15</td><td class="word" onclick="speak('figure')">figure</td><td>人物</td><td>n.</td></tr>
+<tr><td>Week 15</td><td class="word" onclick="speak('figure')">figure</td><td>人物／數字</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('famous')">famous</td><td>著名的</td><td>adj.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('landmarks')">landmarks</td><td>地標</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('colonists')">colonists</td><td>殖民者</td><td>n.</td></tr>
@@ -219,12 +213,11 @@
 <tr><td>Week 15</td><td class="word" onclick="speak('church')">church</td><td>教堂</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('history')">history</td><td>歷史</td><td>n.</td></tr>
 <tr><td>Week 15</td><td class="word" onclick="speak('period')">period</td><td>時期</td><td>n.</td></tr>
-
-<!-- Week 16 -->
+<tr><td>Week 15</td><td class="word" onclick="speak('Boston')">Boston</td><td>波士頓</td><td>n.</td></tr>
 <tr><td>Week 16</td><td class="word" onclick="speak('alphabet')">alphabet</td><td>字母表</td><td>n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('cough')">cough</td><td>咳嗽</td><td>v./n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('cough')">cough</td><td>咳嗽</td><td>n./v.</td></tr>
 <tr><td>Week 16</td><td class="word" onclick="speak('dolphins')">dolphins</td><td>海豚</td><td>n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('laugh')">laugh</td><td>笑</td><td>v./n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('laugh')">laugh</td><td>笑</td><td>n./v.</td></tr>
 <tr><td>Week 16</td><td class="word" onclick="speak('microphone')">microphone</td><td>麥克風</td><td>n.</td></tr>
 <tr><td>Week 16</td><td class="word" onclick="speak('nephew')">nephew</td><td>侄子</td><td>n.</td></tr>
 <tr><td>Week 16</td><td class="word" onclick="speak('phoned')">phoned</td><td>打電話</td><td>v.</td></tr>
@@ -232,133 +225,213 @@
 <tr><td>Week 16</td><td class="word" onclick="speak('rough')">rough</td><td>粗糙的</td><td>adj.</td></tr>
 <tr><td>Week 16</td><td class="word" onclick="speak('tough')">tough</td><td>艱難的</td><td>adj.</td></tr>
 <tr><td>Week 16</td><td class="word" onclick="speak('trophy')">trophy</td><td>獎盃</td><td>n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('enough')">enough</td><td>足夠的</td><td>adj./adv.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('though')">though</td><td>雖然</td><td>conj.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('through')">through</td><td>穿過</td><td>prep.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('brought')">brought</td><td>帶來（bring的過去式）</td><td>v.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('fought')">fought</td><td>打仗（fight的過去式）</td><td>v.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('thought')">thought</td><td>想（think的過去式）</td><td>v.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('bought')">bought</td><td>買（buy的過去式）</td><td>v.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('caught')">caught</td><td>抓住（catch的過去式）</td><td>v.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('taught')">taught</td><td>教（teach的過去式）</td><td>v.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('daughter')">daughter</td><td>女兒</td><td>n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('naughty')">naughty</td><td>頑皮的</td><td>adj.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('autumn')">autumn</td><td>秋天</td><td>n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('author')">author</td><td>作者</td><td>n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('audience')">audience</td><td>觀眾</td><td>n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('laundry')">laundry</td><td>洗衣店／待洗衣物</td><td>n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('applause')">applause</td><td>掌聲</td><td>n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('awkward')">awkward</td><td>尷尬的</td><td>adj.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('awkwardly')">awkwardly</td><td>笨拙地</td><td>adv.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('drawn')">drawn</td><td>畫（draw的過去分詞）</td><td>v.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('fault')">fault</td><td>錯誤／斷層</td><td>n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('haul')">haul</td><td>拖拉</td><td>v./n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('pause')">pause</td><td>暫停</td><td>v./n.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('taught')">taught</td><td>教（teach的過去式）</td><td>v.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('cause')">cause</td><td>原因／引起</td><td>n./v.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak("it's")">it's</td><td>它是／它是</td><td>contr.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('its')">its</td><td>它的</td><td>pron.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('whose')">whose</td><td>誰的</td><td>pron.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('lose')">lose</td><td>失去</td><td>v.</td></tr>
-<tr><td>Week 16</td><td class="word" onclick="speak('loose')">loose</td><td>鬆散的</td><td>adj.</td></tr>
-
-<!-- Week 17 -->
-<tr><td>Week 17</td><td class="word" onclick="speak('allow')">allow</td><td>允許</td><td>v.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('announce')">announce</td><td>宣布</td><td>v.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('cloud')">cloud</td><td>雲</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('count')">count</td><td>計算</td><td>v./n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('doubt')">doubt</td><td>懷疑</td><td>v./n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('ground')">ground</td><td>地面／罰禁足</td><td>n./v.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('mountain')">mountain</td><td>山</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('proud')">proud</td><td>驕傲的</td><td>adj.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('shout')">shout</td><td>大喊</td><td>v./n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('south')">south</td><td>南方</td><td>n./adj.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('amount')">amount</td><td>數量</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('found')">found</td><td>發現／建立</td><td>v.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('house')">house</td><td>房子</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('mouth')">mouth</td><td>嘴巴</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('scout')">scout</td><td>童軍／偵察</td><td>n./v.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('shower')">shower</td><td>淋浴／陣雨</td><td>n./v.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('tower')">tower</td><td>塔</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('clown')">clown</td><td>小丑</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('downtown')">downtown</td><td>市中心</td><td>n./adj.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('frown')">frown</td><td>皺眉</td><td>v./n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('gown')">gown</td><td>長袍</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('brown')">brown</td><td>棕色的</td><td>adj./n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('crowd')">crowd</td><td>人群</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('power')">power</td><td>力量／電力</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('flower')">flower</td><td>花</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('owl')">owl</td><td>貓頭鷹</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('howl')">howl</td><td>嚎叫</td><td>v./n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('vowel')">vowel</td><td>母音</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('drowsy')">drowsy</td><td>昏昏欲睡的</td><td>adj.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('powder')">powder</td><td>粉末</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('proudly')">proudly</td><td>驕傲地</td><td>adv.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('allowance')">allowance</td><td>零用錢</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('thousand')">thousand</td><td>一千</td><td>num.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('surround')">surround</td><td>包圍</td><td>v.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('astronaut')">astronaut</td><td>太空人</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('launched')">launched</td><td>發射</td><td>v.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('voyage')">voyage</td><td>航程</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('outstanding')">outstanding</td><td>傑出的</td><td>adj.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('shuttle')">shuttle</td><td>太空梭</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('weightless')">weightless</td><td>失重的</td><td>adj.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('gravity')">gravity</td><td>地心引力</td><td>n.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('orbit')">orbit</td><td>軌道</td><td>n./v.</td></tr>
-<tr><td>Week 17</td><td class="word" onclick="speak('mission')">mission</td><td>任務</td><td>n.</td></tr>
-
-<!-- Week 18 -->
-<tr><td>Week 18</td><td class="word" onclick="speak('accept')">accept</td><td>接受</td><td>v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('ferries')">ferries</td><td>渡船</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('crutches')">crutches</td><td>拐杖</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('monkeys')">monkeys</td><td>猴子</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('leashes')">leashes</td><td>牽繩</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('blueberries')">blueberries</td><td>藍莓</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('taxes')">taxes</td><td>稅</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('dollars')">dollars</td><td>美元</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('countries')">countries</td><td>國家</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('inches')">inches</td><td>英寸</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('trolleys')">trolleys</td><td>手推車／電車</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('radishes')">radishes</td><td>蘿蔔</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('suitcases')">suitcases</td><td>行李箱</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('brushes')">brushes</td><td>刷子</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('eagles')">eagles</td><td>老鷹</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('umbrellas')">umbrellas</td><td>雨傘</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('ashes')">ashes</td><td>灰燼</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('numbers')">numbers</td><td>數字</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('shoelaces')">shoelaces</td><td>鞋帶</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('sandwiches')">sandwiches</td><td>三明治</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('bicycles')">bicycles</td><td>腳踏車</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('dragonflies')">dragonflies</td><td>蜻蜓</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('galleries')">galleries</td><td>畫廊</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('marshes')">marshes</td><td>沼澤</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('relishes')">relishes</td><td>佐料／喜愛</td><td>n./v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('smudges')">smudges</td><td>污跡</td><td>n./v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('notice')">notice</td><td>注意／通知</td><td>v./n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('recess')">recess</td><td>休息／凹槽</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('advice')">advice</td><td>建議</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('spruce')">spruce</td><td>雲杉／打扮整潔</td><td>n./v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('twice')">twice</td><td>兩次</td><td>adv.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('sentence')">sentence</td><td>句子／判刑</td><td>n./v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('prance')">prance</td><td>昂首闊步</td><td>v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('device')">device</td><td>裝置</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('surface')">surface</td><td>表面</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('princess')">princess</td><td>公主</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('faucet')">faucet</td><td>水龍頭</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('slice')">slice</td><td>切片</td><td>n./v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('chance')">chance</td><td>機會</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('office')">office</td><td>辦公室</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('splice')">splice</td><td>接合／拼接</td><td>v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('iceberg')">iceberg</td><td>冰山</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('spice')">spice</td><td>香料</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('brace')">brace</td><td>支架／牙套</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('price')">price</td><td>價格</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('service')">service</td><td>服務</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('distance')">distance</td><td>距離</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('fancy')">fancy</td><td>華麗的／喜好</td><td>adj./n./v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('instance')">instance</td><td>例子</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('science')">science</td><td>科學</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('landed')">landed</td><td>降落</td><td>v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('seaport')">seaport</td><td>海港</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('island')">island</td><td>島嶼</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('signal')">signal</td><td>信號</td><td>n./v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('sturdy')">sturdy</td><td>堅固的</td><td>adj.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('remarked')">remarked</td><td>評論</td><td>v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('destroyed')">destroyed</td><td>摧毀</td><td>v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('control')">control</td><td>控制</td><td>n./v.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('coal')">coal</td><td>煤炭</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('lenses')">lenses</td><td>鏡片</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('metal')">metal</td><td>金屬</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('reflectors')">reflectors</td><td>反射鏡</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('stormy')">stormy</td><td>暴風雨的</td><td>adj.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('keepers')">keepers</td><td>守護者／管理員</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('wrecks')">wrecks</td><td>殘骸</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('shipwreck')">shipwreck</td><td>船難</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('old-fashioned')">old-fashioned</td><td>老式的</td><td>adj.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('steel')">steel</td><td>鋼鐵</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('towers')">towers</td><td>塔</td><td>n.</td></tr>
+<tr><td>Week 16</td><td class="word" onclick="speak('beamed')">beamed</td><td>光束／笑容滿面</td><td>v.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('ache')">ache</td><td>疼痛</td><td>n./v.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('chorus')">chorus</td><td>合唱</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('machine')">machine</td><td>機器</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('match')">match</td><td>比賽／火柴</td><td>n./v.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('patch')">patch</td><td>補丁</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('ranch')">ranch</td><td>牧場</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('should')">should</td><td>應該</td><td>aux.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('shrill')">shrill</td><td>尖銳的</td><td>adj.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('shrink')">shrink</td><td>收縮</td><td>v.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('square')">square</td><td>正方形／廣場</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('telephone')">telephone</td><td>電話</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('thirty')">thirty</td><td>三十</td><td>num.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('throw')">throw</td><td>投擲</td><td>v.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('whales')">whales</td><td>鯨魚</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('whiskers')">whiskers</td><td>鬍鬚</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('actor')">actor</td><td>演員</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('ballplayer')">ballplayer</td><td>球員</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('bricklayer')">bricklayer</td><td>砌磚工</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('doctor')">doctor</td><td>醫生</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('builder')">builder</td><td>建築工人</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('dancer')">dancer</td><td>舞者</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('sailor')">sailor</td><td>水手</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('creator')">creator</td><td>創作者</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('plumber')">plumber</td><td>水管工</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('printer')">printer</td><td>印表機／印刷工</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('inventor')">inventor</td><td>發明家</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('ranger')">ranger</td><td>護林員／巡邏者</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('roofer')">roofer</td><td>屋頂工人</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('singer')">singer</td><td>歌手</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('swimmer')">swimmer</td><td>游泳者</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('teacher')">teacher</td><td>老師</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('decorator')">decorator</td><td>裝潢工人</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('welder')">welder</td><td>焊工</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('manager')">manager</td><td>經理</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('author')">author</td><td>作者</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('conductor')">conductor</td><td>指揮／導體</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('baby-sitter')">baby-sitter</td><td>保母</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('governor')">governor</td><td>州長／主管</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('moderator')">moderator</td><td>主持人／調解人</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('New England')">New England</td><td>新英格蘭</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('wad')">wad</td><td>一團／一疊</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('bubble gum')">bubble gum</td><td>泡泡糖</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('superhero')">superhero</td><td>超級英雄</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('sheared')">sheared</td><td>剪羊毛／剪斷</td><td>v.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('wool')">wool</td><td>羊毛</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('dyed')">dyed</td><td>染色</td><td>v.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('wild berries')">wild berries</td><td>野莓</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('knitted')">knitted</td><td>編織</td><td>v.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('scarves')">scarves</td><td>圍巾</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('events')">events</td><td>事件</td><td>n.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('paused')">paused</td><td>暫停</td><td>v.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('looked toward')">looked toward</td><td>望向</td><td>v.</td></tr>
+<tr><td>Week 17</td><td class="word" onclick="speak('mess')">mess</td><td>混亂</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('whole')">whole</td><td>全部</td><td>adj./n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('anxiously')">anxiously</td><td>焦急地</td><td>adv.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('instructor')">instructor</td><td>教練／指導者</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('beginners')">beginners</td><td>初學者</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('chairlift')">chairlift</td><td>纜車</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('slopes')">slopes</td><td>斜坡／滑雪道</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('lodge')">lodge</td><td>小屋／住宿</td><td>n./v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('backward')">backward</td><td>向後</td><td>adv./adj.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('skis')">skis</td><td>滑雪板</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('sprawled')">sprawled</td><td>伸展躺下</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('tangle')">tangle</td><td>糾結／纏繞</td><td>n./v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('plopped')">plopped</td><td>撲通落下</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('wobbled')">wobbled</td><td>搖晃</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('awkwardly')">awkwardly</td><td>笨拙地</td><td>adv.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('side by side')">side by side</td><td>並肩</td><td>adv.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('struggling')">struggling</td><td>掙扎</td><td>v./adj.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('sideways')">sideways</td><td>向側面</td><td>adv.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('glided')">glided</td><td>滑行</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('tips')">tips</td><td>提示／尖端</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('facedown')">facedown</td><td>臉朝下</td><td>adv.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('meant')">meant</td><td>意味著</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('give up')">give up</td><td>放棄</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('encouragement')">encouragement</td><td>鼓勵</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('suddenly')">suddenly</td><td>突然</td><td>adv.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('realized')">realized</td><td>意識到</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('complete')">complete</td><td>完成／完整的</td><td>v./adj.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('balance')">balance</td><td>平衡</td><td>n./v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('champion')">champion</td><td>冠軍</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('disabilities')">disabilities</td><td>殘疾</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('championships')">championships</td><td>錦標賽</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('artificial legs')">artificial legs</td><td>義肢</td><td>n.</td></tr>
 <tr><td>Week 18</td><td class="word" onclick="speak('except')">except</td><td>除了</td><td>prep.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('sleepyhead')">sleepyhead</td><td>貪睡鬼</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('sleepyhead')">sleepyhead</td><td>愛睡覺的人</td><td>n.</td></tr>
 <tr><td>Week 18</td><td class="word" onclick="speak('mumbled')">mumbled</td><td>咕噥</td><td>v.</td></tr>
 <tr><td>Week 18</td><td class="word" onclick="speak('sneakers')">sneakers</td><td>運動鞋</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('tossed')">tossed</td><td>拋、扔</td><td>v.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('load')">load</td><td>裝載／負載</td><td>v./n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('unload')">unload</td><td>卸貨</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('tossed')">tossed</td><td>拋擲</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('buildings')">buildings</td><td>建築物</td><td>n.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('load')">load</td><td>裝載</td><td>n./v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('unload')">unload</td><td>卸下</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('package')">package</td><td>包裹</td><td>n.</td></tr>
 <tr><td>Week 18</td><td class="word" onclick="speak('factories')">factories</td><td>工廠</td><td>n.</td></tr>
 <tr><td>Week 18</td><td class="word" onclick="speak('memory')">memory</td><td>記憶</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('replace')">replace</td><td>取代／放回</td><td>v.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('invention')">invention</td><td>發明</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('inventor')">inventor</td><td>發明家</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('engine')">engine</td><td>引擎</td><td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('steamboat')">steamboat</td><td>蒸汽船</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('cotton')">cotton</td><td>棉花</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('gin')">gin</td><td>棉花分離機</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('patent')">patent</td><td>專利</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('traffic')">traffic</td><td>交通</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('light')">light</td><td>燈光／點燃</td><td>n./v.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('bulb')">bulb</td><td>燈泡</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('electricity')">electricity</td><td>電力</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('motion')">motion</td><td>運動／動作</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('picture')">picture</td><td>圖片／電影</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('airplane')">airplane</td><td>飛機</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('flight')">flight</td><td>飛行</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('Wright brothers')">Wright brothers</td><td>萊特兄弟</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('assembly')">assembly</td><td>集會／組裝</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('line')">line</td><td>生產線</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('factory')">factory</td><td>工廠</td><td>n.</td></tr>
-<tr><td>Week 18</td><td class="word" onclick="speak('produced')">produced</td><td>生產</td><td>v.</td></tr>
+<tr><td>Week 18</td><td class="word" onclick="speak('replace')">replace</td><td>替換</td><td>
+
   </tbody>
 </table>
 
 <script>
-  function speak(text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    speechSynthesis.speak(utterance);
-  }
+function speak(text) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  speechSynthesis.speak(utterance);
+}
 
-  document.getElementById('searchBox').addEventListener('input', function () {
-    const filter = this.value.toLowerCase();
-    const rows = document.querySelectorAll('#vocabTable tbody tr');
-    rows.forEach(row => {
-      const text = row.textContent.toLowerCase();
-      row.style.display = text.includes(filter) ? '' : 'none';
-    });
+function filterTable() {
+  const filterText = document.getElementById('searchBox').value.toLowerCase();
+  const checkedSections = Array.from(document.querySelectorAll('.sectionFilter:checked')).map(cb => cb.value.toLowerCase());
+  const rows = document.querySelectorAll('#vocabTable tbody tr');
+
+  rows.forEach(row => {
+    const rowText = row.textContent.toLowerCase();
+    const section = row.cells[0].textContent.toLowerCase();
+    const matchSearch = rowText.includes(filterText);
+    const matchSection = checkedSections.length === 0 || checkedSections.includes(section);
+    row.style.display = (matchSearch && matchSection) ? '' : 'none';
   });
+}
+
+function selectAll() {
+  document.querySelectorAll('.sectionFilter').forEach(cb => cb.checked = true);
+  filterTable();
+}
+
+function clearAll() {
+  document.querySelectorAll('.sectionFilter').forEach(cb => cb.checked = false);
+  filterTable();
+}
+
+window.onload = function() {
+  document.getElementById('searchBox').addEventListener('input', filterTable);
+  document.querySelectorAll('.sectionFilter').forEach(cb => {
+    cb.addEventListener('change', filterTable);
+  });
+};
 </script>
 
 </body>
 </html>
-
