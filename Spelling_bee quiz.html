@@ -4,26 +4,11 @@
   <meta charset="UTF-8">
   <title>英文拼字聽寫測驗</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 30px;
-    }
-    input[type="text"], select {
-      padding: 8px;
-      font-size: 18px;
-      width: 300px;
-      margin: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin: 10px;
-    }
-    #result, #stats {
-      font-size: 20px;
-      margin-top: 20px;
-    }
+    body { font-family: Arial, sans-serif; text-align: center; padding: 30px; }
+    input[type="text"], select { padding: 8px; font-size: 18px; width: 300px; margin: 10px; }
+    button { padding: 10px 20px; font-size: 16px; margin: 10px; }
+    #result, #stats { font-size: 20px; margin-top: 20px; }
+    .sectionFilter { margin: 0 10px; }
   </style>
 </head>
 <body>
@@ -31,14 +16,19 @@
 <h2>🔊 英文拼字聽寫測驗</h2>
 <p>系統會念出英文單字，請輸入正確拼寫</p>
 
-<label for="partSelect">選擇測驗區段：</label>
-<select id="partSelect">
-  <option value="1">Part 1</option>
-  <option value="2">Part 2</option>
-  <option value="3">Part 3</option>
-  <option value="4">Part 4</option>
-  <option value="all">全部單字</option>
-</select>
+<div>
+  <label><input type="checkbox" class="sectionFilter" value="1"> Part 1</label>
+  <label><input type="checkbox" class="sectionFilter" value="2"> Part 2</label>
+  <label><input type="checkbox" class="sectionFilter" value="3"> Part 3</label>
+  <label><input type="checkbox" class="sectionFilter" value="4"> Part 4</label>
+  <label><input type="checkbox" class="sectionFilter" value="15"> Week 15</label>
+  <label><input type="checkbox" class="sectionFilter" value="16"> Week 16</label>
+  <label><input type="checkbox" class="sectionFilter" value="17"> Week 17</label>
+  <label><input type="checkbox" class="sectionFilter" value="18"> Week 18</label>
+  <br>
+  <button onclick="selectAll()">全選</button>
+  <button onclick="clearAll()">清除選擇</button>
+</div>
 
 <label for="countSelect">題數：</label>
 <select id="countSelect">
@@ -68,36 +58,93 @@
 <div id="stats"></div>
 
 <script>
+// ✅ 單字庫 
 const vocabParts = {
-  1: ["abandon", "accuse", "alter", "anchor", "anchovy", "annual", "arrowhead", "artichoke", "assistant", "astonish",
-      "astronaut", "bellow", "biscuit", "bodyguard", "bronze", "bulge", "bumble", "butcher", "candidate", "champion",
-      "channel", "commit", "compete", "conflict", "constantly"],
-  2: ["criminal", "elevation", "embrace", "encounter", "entertain", "exceed", "feeble", "fierce", "fossil", "gallop",
-      "grizzly", "harmony", "heir", "horror", "humble", "humor", "inspire", "instruct", "knuckle", "ladle",
-      "lynx", "maiden", "marble", "melody", "mercy"],
-  3: ["mulberry", "mumble", "museum", "musician", "mustang", "mustard", "myrtle", "nebula", "neglect", "oyster",
-      "parcel", "parlor", "plunge", "praise", "priest", "process", "product", "propose", "qualify", "quarrel",
-      "realm", "reign", "rejoice", "relative", "retreat"],
-  4: ["saddle", "sagebrush", "scamper", "scarce", "serious", "severe", "similar", "sincere", "startle", "stumble",
-      "syrup", "telegram", "tread", "tumble", "twinkle", "university", "virtue", "voyage", "watercress", "weapon",
-      "weave", "wicked", "width", "wobble", "wrath"]
+  1: [
+    "abandon","accuse","alter","anchor","anchovy","annual","arrowhead","artichoke","assistant","astonish",
+    "astronaut","bellow","biscuit","bodyguard","bronze","bulge","bumble","butcher","candidate","champion",
+    "channel","commit","compete","conflict","constantly"
+  ],
+  2: [
+    "criminal","elevation","embrace","encounter","entertain","exceed","feeble","fierce","fossil","gallop",
+    "grizzly","harmony","heir","horror","humble","humor","inspire","instruct","knuckle","ladle",
+    "lynx","maiden","marble","melody","mercy"
+  ],
+  3: [
+    "mulberry","mumble","museum","musician","mustang","mustard","myrtle","nebula","neglect","oyster",
+    "parcel","parlor","plunge","praise","priest","process","product","propose","qualify","quarrel",
+    "realm","reign","rejoice","relative","retreat"
+  ],
+  4: [
+    "saddle","sagebrush","scamper","scarce","serious","severe","similar","sincere","startle","stumble",
+    "syrup","telegram","tread","tumble","twinkle","university","virtue","voyage","watercress","weapon",
+    "weave","wicked","width","wobble","wrath"
+  ],
+  15: [
+    "bang","catch","chef","chemist","fresh","shovel","shrubs","shrugged","sting","trash",
+    "which","whisper","whistle","benches","branches","change","chart","cheer","choose","chorus",
+    "latch","machine","mechanic","parachute","pinch","ranch","search","stomach","torch",
+    "wedge","bandage","bridge","cottage","fudge","sausage","trudge","garbage","lodge","hedge",
+    "badge","cabbage","manage","luggage","judge","damage","dodge","package","average","fragile",
+    "image","pledge","voyage","journal","reminded","yawning","notebook","worn out","message",
+    "historical","figure","famous","landmarks","colonists","cargo","harbor","lanterns","church",
+    "history","period","Boston"
+  ],
+  16: [
+    "alphabet","cough","dolphins","laugh","microphone","nephew","phoned","photo","rough","tough","trophy",
+    "ferries","crutches","monkeys","leashes","blueberries","taxes","dollars","countries","inches","trolleys",
+    "radishes","suitcases","brushes","eagles","umbrellas","ashes","numbers","shoelaces","sandwiches","bicycles",
+    "dragonflies","galleries","marshes","relishes","smudges","notice","recess","advice","spruce","twice",
+    "sentence","prance","device","surface","princess","faucet","slice","chance","office","splice","iceberg",
+    "spice","brace","price","service","distance","fancy","instance","science","landed","seaport","island",
+    "signal","sturdy","remarked","destroyed","control","coal","lenses","metal","reflectors","stormy","keepers",
+    "wrecks","shipwreck","old-fashioned","steel","towers","beamed"
+  ],
+  17: [
+    "ache","chorus","machine","match","patch","ranch","should","shrill","shrink","square",
+    "telephone","thirty","throw","whales","whiskers","actor","ballplayer","bricklayer","doctor","builder",
+    "dancer","sailor","creator","plumber","printer","inventor","ranger","roofer","singer","swimmer",
+    "teacher","decorator","welder","manager","author","conductor","baby-sitter","governor","moderator",
+    "New England","wad","bubble gum","superhero","sheared","wool","dyed","wild berries","knitted",
+    "scarves","events","paused","looked toward","mess"
+  ],
+  18: [
+    "whole","anxiously","instructor","beginners","chairlift","slopes","lodge","backward","skis",
+    "sprawled","tangle","plopped","wobbled","awkwardly","side by side","struggling","sideways","glided",
+    "tips","facedown","meant","give up","encouragement","suddenly","realized","complete","balance",
+    "champion","disabilities","championships","artificial legs","except","sleepyhead","mumbled","sneakers",
+    "tossed","buildings","load","unload","package","factories","memory","replace","goods"
+  ]
 };
+
 
 let quizWords = [];
 let currentWord = null;
 let currentIndex = 0;
 let correctCount = 0;
 
+// ✅ 全選 / 清除
+function selectAll() {
+  document.querySelectorAll('.sectionFilter').forEach(cb => cb.checked = true);
+}
+function clearAll() {
+  document.querySelectorAll('.sectionFilter').forEach(cb => cb.checked = false);
+}
+
+// ✅ 開始測驗
 function startQuiz() {
-  const part = document.getElementById("partSelect").value;
   const count = parseInt(document.getElementById("countSelect").value);
+  const checkedSections = Array.from(document.querySelectorAll('.sectionFilter:checked')).map(cb => cb.value);
+
+  if (checkedSections.length === 0) {
+    alert("請至少勾選一個測驗區段！");
+    return;
+  }
 
   let sourceWords = [];
-  if (part === "all") {
-    sourceWords = Object.values(vocabParts).flat();
-  } else {
-    sourceWords = vocabParts[part];
-  }
+  checkedSections.forEach(sec => {
+    sourceWords = sourceWords.concat(vocabParts[sec]);
+  });
 
   quizWords = sourceWords.sort(() => 0.5 - Math.random()).slice(0, count);
   currentIndex = 0;
@@ -111,6 +158,7 @@ function startQuiz() {
   nextQuestion();
 }
 
+// ✅ 下一題
 function nextQuestion() {
   if (currentIndex >= quizWords.length) {
     const score = Math.round((correctCount / quizWords.length) * 100);
@@ -133,6 +181,7 @@ function nextQuestion() {
   document.getElementById("answerInput").focus();
 }
 
+// ✅ 檢查答案
 function checkAnswer() {
   const userAnswer = document.getElementById("answerInput").value.trim().toLowerCase();
   if (!currentWord) return;
@@ -153,10 +202,12 @@ function checkAnswer() {
   document.getElementById("stats").textContent = `目前進度：${currentIndex} / ${quizWords.length}　答對：${correctCount}`;
 }
 
+// ✅ 重播音檔
 function repeatAudio() {
   if (currentWord) speakWord(currentWord);
 }
 
+// ✅ 語音播放
 function speakWord(word) {
   const rate = parseFloat(document.getElementById("rateSelect").value);
   const utterance = new SpeechSynthesisUtterance(word);
@@ -165,6 +216,7 @@ function speakWord(word) {
   speechSynthesis.speak(utterance);
 }
 
+// ✅ Enter 鍵提交
 window.onload = function () {
   document.getElementById("answerInput").addEventListener("keydown", function (event) {
     if (event.key === "Enter" && !document.getElementById("submitBtn").disabled) {
