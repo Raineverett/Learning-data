@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>小記者出動 - 聽寫練習 (Linux 優化版)</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; padding: 20px; text-align: center; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; }
+        th { background: #3498db; color: white; }
+        .btn-play { background: #2ecc71; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 4px; font-size: 16px; }
+        .btn-play:hover { background: #27ae60; }
+        input { width: 90%; padding: 8px; font-size: 18px; border: 1px solid #ccc; border-radius: 4px; }
+        .ans { display: none; font-weight: bold; color: #e67e22; font-size: 20px; }
+        .show-all .ans { display: inline; }
+        .controls { margin-top: 20px; }
+        .btn-main { padding: 10px 20px; font-size: 18px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📝 詞彙聽寫練習 (跨平台清晰語音)</h1>
+    <table id="main-table">
+        <thead>
+            <tr>
+                <th>序號</th>
+                <th>點擊發音</th>
+                <th>輸入國字</th>
+                <th>正確答案</th>
+            </tr>
+        </thead>
+        <tbody id="quiz-content"></tbody>
+    </table>
+
+    <div class="controls">
+        <button class="btn-main" onclick="document.body.classList.toggle('show-all')">顯示 / 隱藏答案</button>
+    </div>
+</div>
+
+<audio id="tts-player" style="display:none;"></audio>
+
+<script>
+    const vocabs = [
+        "熱門職業", "央求採訪", "各行各業", "急診室醫師", "一日千里",
+        "無法解開的疑團", "和死神拔河", "醫療救護", "釋放緊繃的情緒", "疫情快篩",
+        "不可開交", "並肩作戰", "偉大的英雄", "修補步驟", "菊石化石",
+        "防塵口罩", "聚精會神", "小槌子敲擊", "多餘的", "小心翼翼撥開",
+        "螺旋形輪廓", "可遇不可求", "拼湊骨架", "解開時空的密碼", "獨一無二"
+    ];
+
+    const tbody = document.getElementById('quiz-content');
+    const audioPlayer = document.getElementById('tts-player');
+
+    // 生成表格
+    vocabs.forEach((word, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${i + 1}</td>
+            <td><button class="btn-play" onclick="playTTS('${word}')">🔊 播放</button></td>
+            <td><input type="text"></td>
+            <td><span class="ans">${word}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // 調用 Google TTS 接口 (這在 Linux Firefox 上最穩定)
+    function playTTS(text) {
+        // 使用 Google 翻譯的 TTS 接口，指定語言為 zh-TW
+        const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=zh-TW&client=tw-ob`;
+        audioPlayer.src = url;
+        audioPlayer.play();
+    }
+</script>
+
+</body>
+</html>
